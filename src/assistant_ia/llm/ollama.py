@@ -4,6 +4,7 @@ import urllib.request
 
 from src.config import OLLAMA_MODEL, OLLAMA_URL
 
+from .errors import LLMConnectionError, LLMRequestError, LLMResponseError
 from .interface import LLMInterface
 
 
@@ -47,12 +48,30 @@ class OllamaLLM(LLMInterface):
 
         try:
             with urllib.request.urlopen(request) as response:
-                result = json.loads(
-                    response.read().decode("utf-8")
-                )
+                result = json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            raise LLMRequestError(
+                f"Ollama a retourné l'erreur HTTP {exc.code}."
+            ) from exc
         except urllib.error.URLError as exc:
-            raise RuntimeError(
+            raise LLMConnectionError(
                 f"Impossible de contacter Ollama : {exc}"
             ) from exc
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise LLMResponseError(
+                "La réponse d'Ollama n'est pas un JSON valide."
+            ) from exc
 
-        return result["response"]
+        try:
+            text = result["response"]
+        except (KeyError, TypeError) as exc:
+            raise LLMResponseError(
+                "La réponse d'Ollama ne contient pas de texte."
+            ) from exc
+
+        if not isinstance(text, str):
+            raise LLMResponseError(
+                "La réponse d'Ollama n'est pas un texte."
+            )
+
+        return text

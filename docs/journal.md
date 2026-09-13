@@ -69,6 +69,10 @@ Un test unitaire vérifie le contenu de la requête HTTP avec un service Ollama 
 
 Une limite facultative de longueur, `max_tokens`, a ensuite été ajoutée. Elle est transmise sous le nom `num_predict` attendu par l'API Ollama.
 
+### Étape 2 — Erreurs LLM explicites
+
+Les erreurs de connexion, les réponses HTTP en erreur et les réponses invalides sont désormais traduites en exceptions du projet. Les tests unitaires simulent ces trois situations sans appeler Ollama.
+
 ### Documentation
 
 Les fichiers suivants ont été mis à jour pour refléter l'état réel du projet :
@@ -85,6 +89,6 @@ Continuer l'étape 2 :
 
 * renforcer les tests ;
 * évaluer les autres paramètres utiles du LLM ;
-* améliorer la gestion des erreurs ;
+* valider les entrées et paramètres du fournisseur ;
 
 avant de commencer l'extraction des documents PDF.

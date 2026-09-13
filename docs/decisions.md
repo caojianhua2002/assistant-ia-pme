@@ -94,3 +94,15 @@ La signature de `ask(prompt: str) -> str` reste inchangée. La configuration du 
 ### Complément
 
 Le fournisseur accepte aussi `max_tokens`, transmis à Ollama comme `num_predict`, afin de limiter la longueur maximale de la réponse.
+
+---
+
+## 2026-09-13 — Erreurs LLM explicites
+
+### Décision
+
+Les erreurs provenant d'Ollama sont traduites en exceptions du projet : `LLMConnectionError`, `LLMRequestError` et `LLMResponseError`. Elles héritent toutes de `LLMError`.
+
+### Conséquence
+
+Le reste de l'application peut gérer les échecs sans dépendre directement des exceptions HTTP de Python ou du format de réponse d'Ollama.
