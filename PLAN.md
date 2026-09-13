@@ -30,14 +30,16 @@ Le projet privilégie :
 **Statut : 🔄 en cours**
 
 * [x] Première fonction `ask()`
-* [x] Création de `LLMClient`
+* [x] Définition de l'interface abstraite `LLMInterface`
+* [x] Implémentation `OllamaLLM` de cette interface
 * [x] Connexion configurable à Ollama
 * [x] Modèle configurable
-* [x] Test de configuration du client
+* [x] Test d'intégration avec `OllamaLLM`
+* [x] Migration du test existant vers `OllamaLLM`
 * [ ] Stabiliser l'interface LLM
 * [ ] Ajouter les paramètres utiles de génération
 * [ ] Améliorer la gestion des erreurs
-* [ ] Finaliser les tests
+* [ ] Finaliser les tests (dont tests unitaires sans dépendre d'Ollama)
 
 ### Étape 3 — Extraction PDF
 

@@ -25,7 +25,7 @@ qwen3:0.6b
 
 ### Conséquence
 
-Le projet doit éviter de dépendre directement du moteur Ollama dans son code métier.
+Le code métier ne doit pas dépendre directement de l'API HTTP d'Ollama.
 
 ---
 
@@ -33,35 +33,29 @@ Le projet doit éviter de dépendre directement du moteur Ollama dans son code m
 
 ### Décision
 
-La communication avec le LLM est encapsulée dans `src/llm.py`, via la classe :
-
-```python
-LLMClient
-```
+La communication avec le LLM a d'abord été encapsulée dans `src/llm.py`, via la classe `LLMClient`.
 
 ### Raisons
 
-L'application devra pouvoir évoluer sans que le code métier dépende directement de l'API HTTP d'Ollama.
+L'application devait pouvoir évoluer sans que le code métier dépende directement de l'API HTTP d'Ollama.
 
-L'interface permettra éventuellement de remplacer ou d'ajouter un autre moteur LLM ultérieurement.
+Cette première interface permettait éventuellement de remplacer ou d'ajouter un autre moteur LLM ultérieurement.
 
-### Conséquence
+### Conséquence historique
 
-Le reste de l'application doit utiliser `LLMClient` plutôt que construire directement des requêtes HTTP vers Ollama.
+Le reste de l'application devait utiliser `LLMClient` plutôt que construire directement des requêtes HTTP vers Ollama.
+
+### État actuel
+
+Cette première encapsulation a été remplacée pour le nouveau code par l'interface `LLMInterface` et son implémentation `OllamaLLM`. Le fichier `src/llm.py` est toujours présent, mais aucune référence à `LLMClient`, `src.llm` ou à sa fonction `ask()` n'a été trouvée en dehors de ce fichier. Il est conservé provisoirement ; sa suppression reste une décision à prendre après vérification complémentaire.
 
 ---
 
 ## 2026-09-13 — Conservation de `ask()`
 
-### Décision
+### Décision historique
 
-La fonction :
-
-```python
-ask(prompt)
-```
-
-est conservée comme raccourci vers `LLMClient().ask(prompt)`.
+La fonction `ask(prompt)` a été conservée dans `src/llm.py` comme raccourci vers `LLMClient().ask(prompt)`.
 
 ### Raisons
 
@@ -69,4 +63,18 @@ est conservée comme raccourci vers `LLMClient().ask(prompt)`.
 * éviter de casser les tests et le code déjà développé ;
 * permettre une transition progressive vers `LLMClient`.
 
-Cette fonction pourra être supprimée ultérieurement si elle ne présente plus d'utilité.
+### État actuel
+
+La fonction existe encore dans le module historique, mais aucun autre fichier du dépôt ne la référence. Le test actuel utilise `OllamaLLM().ask(...)`. La pertinence de conserver ce raccourci devra être réévaluée en même temps que le sort de `src/llm.py`.
+
+---
+
+## 2026-09-13 — Interface LLM indépendante du fournisseur
+
+### Décision
+
+Le contrat LLM est désormais défini par `LLMInterface` dans `src/assistant_ia/llm/interface.py`. `OllamaLLM`, dans `src/assistant_ia/llm/ollama.py`, implémente ce contrat et délègue les appels au service Ollama.
+
+### Conséquence
+
+Les futurs consommateurs du LLM doivent programmer contre `LLMInterface`. `OllamaLLM` est le fournisseur concret actuel.

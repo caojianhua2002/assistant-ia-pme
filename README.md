@@ -21,7 +21,10 @@ Le projet privilégie :
 Question utilisateur
        │
        ▼
-   LLMClient
+ LLMInterface
+       ▲
+       │
+  OllamaLLM
        │
        ▼
      Ollama
@@ -30,9 +33,9 @@ Question utilisateur
    qwen3:0.6b
 ```
 
-L'application ne communique donc pas directement avec le modèle : `LLMClient` constitue l'interface entre le code du projet et Ollama.
+`LLMInterface` définit le contrat commun des fournisseurs de LLM. `OllamaLLM` en est l'implémentation actuelle et réalise les requêtes HTTP vers Ollama. Le code appelant peut donc dépendre de l'interface plutôt que d'un moteur précis.
 
-Cette séparation permettra de faire évoluer ultérieurement le moteur LLM sans modifier le reste de l'application.
+Cette séparation permet de faire évoluer le moteur LLM sans modifier le contrat utilisé par le reste de l'application.
 
 ## Environnement de développement
 
@@ -74,22 +77,16 @@ pytest -q
 Exemple d'utilisation directe :
 
 ```python
-from src.llm import LLMClient
+from src.assistant_ia.llm import OllamaLLM
 
-client = LLMClient()
+llm = OllamaLLM()
 
-response = client.ask("Réponds uniquement par : OK")
+response = llm.ask("Réponds uniquement par : OK")
 
 print(response)
 ```
 
-Un raccourci compatible est également disponible :
-
-```python
-from src.llm import ask
-
-response = ask("Réponds uniquement par : OK")
-```
+L'ancien module `src/llm.py` est encore présent de manière transitoire, avec `LLMClient` et sa fonction `ask()`. Il n'est plus référencé par les tests ni par le nouveau package ; il est conservé jusqu'à vérification et décision explicite de suppression.
 
 ## Structure
 
@@ -100,7 +97,12 @@ assistant-ia/
 │   └── journal.md
 ├── src/
 │   ├── config.py
-│   └── llm.py
+│   ├── llm.py                  # ancienne API, conservée temporairement
+│   └── assistant_ia/
+│       └── llm/
+│           ├── __init__.py
+│           ├── interface.py
+│           └── ollama.py
 ├── tests/
 │   ├── __init__.py
 │   └── test_ollama.py

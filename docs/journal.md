@@ -37,11 +37,11 @@ Le test automatisé initial a également réussi :
 
 ### Étape 2 — Interface LLM
 
-Une classe `LLMClient` a été ajoutée dans `src/llm.py`.
+Une première classe `LLMClient` a été ajoutée dans `src/llm.py`.
 
 Elle permet de centraliser la communication avec Ollama et de rendre l'URL et le modèle configurables.
 
-La fonction historique `ask()` est conservée comme raccourci.
+La fonction historique `ask()` a été conservée comme raccourci.
 
 Un test direct avec :
 
@@ -55,13 +55,9 @@ a retourné correctement :
 OK
 ```
 
-Les tests actuels ont ensuite été complétés pour vérifier également la configuration du client.
+Cette première version a ensuite été remplacée pour le nouveau code par `LLMInterface` et `OllamaLLM`, situés dans `src/assistant_ia/llm/`. Le test d'intégration actuel instancie `OllamaLLM` puis appelle sa méthode `ask()`.
 
-Résultat attendu :
-
-```text
-2 passed
-```
+L'ancien module `src/llm.py`, incluant `LLMClient` et la fonction de raccourci `ask()`, est toujours présent mais n'est référencé ni par le test actuel ni par le nouveau package. Il est conservé temporairement dans l'attente d'une décision explicite de suppression.
 
 ### Documentation
 
@@ -78,7 +74,7 @@ Les fichiers suivants ont été mis à jour pour refléter l'état réel du proj
 Continuer l'étape 2 :
 
 * renforcer les tests ;
-* stabiliser l'interface `LLMClient` ;
+* stabiliser le contrat de `LLMInterface` ;
 * définir les paramètres utiles du LLM ;
 * améliorer la gestion des erreurs ;
 

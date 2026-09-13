@@ -1,8 +1,10 @@
-from src.llm import ask
+from src.assistant_ia.llm import OllamaLLM
 
 
 def test_ask_returns_response():
-    response = ask(
+    llm = OllamaLLM()
+
+    response = llm.ask(
         "Réponds en une phrase : qu'est-ce qu'une PME ?"
     )
 
