@@ -9,6 +9,7 @@ def test_ask_sends_configured_generation_options_to_ollama():
         model="test-model",
         temperature=0.2,
         max_tokens=64,
+        seed=42,
     )
     response = MagicMock()
     response.__enter__.return_value.read.return_value = (
@@ -31,4 +32,5 @@ def test_ask_sends_configured_generation_options_to_ollama():
     assert payload["options"] == {
         "temperature": 0.2,
         "num_predict": 64,
+        "seed": 42,
     }

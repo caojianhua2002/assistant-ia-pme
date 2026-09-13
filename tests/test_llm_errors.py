@@ -72,6 +72,7 @@ def test_ask_raises_response_error_when_response_is_not_json():
         ({"model": " "}, "modèle Ollama"),
         ({"temperature": "0.2"}, "température"),
         ({"max_tokens": 0}, "max_tokens"),
+        ({"seed": "42"}, "seed"),
     ],
 )
 def test_constructor_rejects_invalid_configuration(kwargs, message):

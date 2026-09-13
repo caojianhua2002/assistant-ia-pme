@@ -102,6 +102,14 @@ llm = OllamaLLM(max_tokens=64)
 
 Cette option est transmise à Ollama sous le nom `num_predict`.
 
+Pour rendre un essai plus reproductible, on peut aussi fixer une graine :
+
+```python
+llm = OllamaLLM(seed=42)
+```
+
+Avec le même prompt et les mêmes autres paramètres, une graine fixe aide à reproduire le même résultat.
+
 L'ancien module `src/llm.py` est encore présent de manière transitoire, avec `LLMClient` et sa fonction `ask()`. Il n'est plus référencé par les tests ni par le nouveau package ; il est conservé jusqu'à vérification et décision explicite de suppression.
 
 ## Structure

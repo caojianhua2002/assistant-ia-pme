@@ -95,6 +95,8 @@ La signature de `ask(prompt: str) -> str` reste inchangée. La configuration du 
 
 Le fournisseur accepte aussi `max_tokens`, transmis à Ollama comme `num_predict`, afin de limiter la longueur maximale de la réponse.
 
+Le fournisseur accepte enfin `seed`, un entier optionnel transmis à Ollama pour favoriser la reproductibilité des essais de démonstration.
+
 ---
 
 ## 2026-09-13 — Erreurs LLM explicites

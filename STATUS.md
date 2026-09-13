@@ -54,6 +54,8 @@ Le contrat stabilisé est `ask(prompt: str) -> str` : chaque fournisseur reçoit
 
 `OllamaLLM` accepte également `max_tokens`, qui limite le nombre maximal de tokens générés. Cette option est transmise à l'API Ollama sous son nom `num_predict`. Comme `temperature`, elle reste absente de la requête lorsqu'elle vaut `None`.
 
+Le paramètre optionnel `seed` est transmis tel quel à Ollama. Il permet de rendre les essais plus reproductibles à paramètres et prompt identiques.
+
 Les erreurs exposées au reste du projet sont `LLMConnectionError` (service injoignable), `LLMRequestError` (erreur HTTP renvoyée par Ollama), `LLMResponseError` (réponse invalide) et `LLMValidationError` (entrée ou configuration invalide). Elles héritent toutes de `LLMError`.
 
 `src/llm.py` existe encore et contient l'ancienne API `LLMClient` ainsi que la fonction de raccourci `ask()`. L'audit ne relève aucune importation de `src.llm`, `LLMClient` ou de cette fonction en dehors de ce module. Il est donc conservé provisoirement, sans être utilisé par le test actuel, jusqu'à une décision explicite de suppression.
@@ -65,7 +67,7 @@ Les erreurs exposées au reste du projet sont `LLMConnectionError` (service injo
 * qu'une requête réelle au LLM retourne une chaîne non vide ;
 * que cette requête passe par une instance de `OllamaLLM`.
 * que `LLMInterface` impose la méthode `ask()` et que `OllamaLLM` respecte ce contrat sans nécessiter de service Ollama.
-* que les options `temperature` et `max_tokens` configurées sont bien envoyées dans la requête HTTP vers Ollama, sans contacter le service.
+* que les options `temperature`, `max_tokens` et `seed` configurées sont bien envoyées dans la requête HTTP vers Ollama, sans contacter le service.
 * que les erreurs de connexion, HTTP et de réponse sont traduites en erreurs LLM explicites, sans contacter le service.
 * qu'un prompt vide, ainsi qu'une configuration ou des paramètres invalides, sont refusés avant l'appel à Ollama.
 

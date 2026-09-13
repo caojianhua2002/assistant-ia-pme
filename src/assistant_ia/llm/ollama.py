@@ -22,12 +22,20 @@ class OllamaLLM(LLMInterface):
         model: str = OLLAMA_MODEL,
         temperature: float | None = None,
         max_tokens: int | None = None,
+        seed: int | None = None,
     ):
-        self._validate_configuration(url, model, temperature, max_tokens)
+        self._validate_configuration(
+            url,
+            model,
+            temperature,
+            max_tokens,
+            seed,
+        )
         self.url = url
         self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
+        self.seed = seed
 
     def ask(self, prompt: str) -> str:
         """Envoie ``prompt`` à Ollama et retourne sa réponse textuelle."""
@@ -48,6 +56,8 @@ class OllamaLLM(LLMInterface):
             options["temperature"] = self.temperature
         if self.max_tokens is not None:
             options["num_predict"] = self.max_tokens
+        if self.seed is not None:
+            options["seed"] = self.seed
         if options:
             data["options"] = options
 
@@ -93,6 +103,7 @@ class OllamaLLM(LLMInterface):
         model: str,
         temperature: float | None,
         max_tokens: int | None,
+        seed: int | None,
     ) -> None:
         if not isinstance(url, str) or not url.strip():
             raise LLMValidationError("L'URL Ollama doit être non vide.")
@@ -113,3 +124,7 @@ class OllamaLLM(LLMInterface):
             raise LLMValidationError(
                 "max_tokens doit être un entier strictement positif ou None."
             )
+        if seed is not None and (
+            isinstance(seed, bool) or not isinstance(seed, int)
+        ):
+            raise LLMValidationError("seed doit être un entier ou None.")

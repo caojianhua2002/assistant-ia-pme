@@ -39,6 +39,7 @@ Le projet privilégie :
 * [x] Stabiliser le contrat `LLMInterface.ask(prompt) -> str`
 * [x] Ajouter le paramètre de génération `temperature`
 * [x] Ajouter une limite de réponse avec `max_tokens`
+* [x] Ajouter `seed` pour les démonstrations reproductibles
 * [ ] Évaluer les autres paramètres utiles de génération
 * [x] Distinguer les erreurs de connexion, de requête et de réponse LLM
 * [x] Valider les entrées et paramètres du fournisseur
