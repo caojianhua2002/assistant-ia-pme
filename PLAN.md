@@ -36,7 +36,7 @@ Le projet privilégie :
 * [x] Modèle configurable
 * [x] Test d'intégration avec `OllamaLLM`
 * [x] Migration du test existant vers `OllamaLLM`
-* [ ] Stabiliser l'interface LLM
+* [x] Stabiliser le contrat `LLMInterface.ask(prompt) -> str`
 * [ ] Ajouter les paramètres utiles de génération
 * [ ] Améliorer la gestion des erreurs
 * [ ] Finaliser les tests (dont tests unitaires sans dépendre d'Ollama)

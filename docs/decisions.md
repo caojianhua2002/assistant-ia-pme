@@ -73,7 +73,7 @@ La fonction existe encore dans le module historique, mais aucun autre fichier du
 
 ### Décision
 
-Le contrat LLM est désormais défini par `LLMInterface` dans `src/assistant_ia/llm/interface.py`. `OllamaLLM`, dans `src/assistant_ia/llm/ollama.py`, implémente ce contrat et délègue les appels au service Ollama.
+Le contrat LLM est désormais défini par `LLMInterface` dans `src/assistant_ia/llm/interface.py`. Sa méthode publique est stabilisée à `ask(prompt: str) -> str`. `OllamaLLM`, dans `src/assistant_ia/llm/ollama.py`, implémente ce contrat et délègue les appels au service Ollama.
 
 ### Conséquence
 

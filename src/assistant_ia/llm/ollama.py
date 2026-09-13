@@ -8,7 +8,7 @@ from .interface import LLMInterface
 
 
 class OllamaLLM(LLMInterface):
-    """Implémentation de l'interface LLM pour Ollama."""
+    """Fournisseur Ollama qui respecte le contrat :class:`LLMInterface`."""
 
     def __init__(
         self,
@@ -19,7 +19,7 @@ class OllamaLLM(LLMInterface):
         self.model = model
 
     def ask(self, prompt: str) -> str:
-        """Envoie un prompt à Ollama et retourne sa réponse."""
+        """Envoie ``prompt`` à Ollama et retourne sa réponse textuelle."""
 
         data = {
             "model": self.model,

@@ -48,6 +48,8 @@ Contient :
 * communication HTTP avec l'API Ollama
 * gestion de l'erreur de connexion à Ollama
 
+Le contrat stabilisé est `ask(prompt: str) -> str` : chaque fournisseur reçoit un prompt textuel et retourne une réponse textuelle. `LLMInterface` reste abstraite ; `OllamaLLM` est l'implémentation concrète actuelle.
+
 `src/llm.py` existe encore et contient l'ancienne API `LLMClient` ainsi que la fonction de raccourci `ask()`. L'audit ne relève aucune importation de `src.llm`, `LLMClient` ou de cette fonction en dehors de ce module. Il est donc conservé provisoirement, sans être utilisé par le test actuel, jusqu'à une décision explicite de suppression.
 
 ### Tests
@@ -56,8 +58,9 @@ Contient :
 
 * qu'une requête réelle au LLM retourne une chaîne non vide ;
 * que cette requête passe par une instance de `OllamaLLM`.
+* que `LLMInterface` impose la méthode `ask()` et que `OllamaLLM` respecte ce contrat sans nécessiter de service Ollama.
 
-Il n'existe actuellement pas de test automatisé de configuration de l'URL ou du modèle, ni de test unitaire isolé d'Ollama.
+Les tests unitaires vérifient aussi que l'URL et le modèle fournis au constructeur sont conservés. Il n'existe pas encore de test isolé de la requête HTTP vers Ollama.
 
 ## Tests
 
@@ -82,10 +85,9 @@ Sous-étape actuelle :
 Prochaines actions :
 
 1. compléter les tests ;
-2. stabiliser le contrat de `LLMInterface` ;
-3. définir les paramètres de génération nécessaires ;
-4. améliorer la gestion des erreurs ;
-5. préparer l'utilisation du LLM par les prochaines étapes du projet.
+2. définir les paramètres de génération nécessaires ;
+3. améliorer la gestion des erreurs ;
+4. préparer l'utilisation du LLM par les prochaines étapes du projet.
 
 ## Points restant à traiter
 

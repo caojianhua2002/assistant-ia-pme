@@ -59,6 +59,8 @@ Cette première version a ensuite été remplacée pour le nouveau code par `LLM
 
 L'ancien module `src/llm.py`, incluant `LLMClient` et la fonction de raccourci `ask()`, est toujours présent mais n'est référencé ni par le test actuel ni par le nouveau package. Il est conservé temporairement dans l'attente d'une décision explicite de suppression.
 
+Le contrat a été stabilisé : `LLMInterface` définit `ask(prompt: str) -> str`, et `OllamaLLM` l'implémente. Des tests unitaires vérifient ce contrat, l'implémentation et la conservation de la configuration sans contacter Ollama.
+
 ### Documentation
 
 Les fichiers suivants ont été mis à jour pour refléter l'état réel du projet :
@@ -74,7 +76,6 @@ Les fichiers suivants ont été mis à jour pour refléter l'état réel du proj
 Continuer l'étape 2 :
 
 * renforcer les tests ;
-* stabiliser le contrat de `LLMInterface` ;
 * définir les paramètres utiles du LLM ;
 * améliorer la gestion des erreurs ;
 
