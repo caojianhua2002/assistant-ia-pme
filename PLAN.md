@@ -27,7 +27,7 @@ Le projet privilégie :
 
 ### Étape 2 — Interface LLM
 
-**Statut : 🔄 en cours**
+**Statut : ✅ terminée**
 
 * [x] Première fonction `ask()`
 * [x] Définition de l'interface abstraite `LLMInterface`
@@ -40,10 +40,11 @@ Le projet privilégie :
 * [x] Ajouter le paramètre de génération `temperature`
 * [x] Ajouter une limite de réponse avec `max_tokens`
 * [x] Ajouter `seed` pour les démonstrations reproductibles
-* [ ] Évaluer les autres paramètres utiles de génération
+* [x] Différer les autres paramètres jusqu'à un besoin identifié
 * [x] Distinguer les erreurs de connexion, de requête et de réponse LLM
 * [x] Valider les entrées et paramètres du fournisseur
-* [ ] Finaliser les tests (dont tests unitaires sans dépendre d'Ollama)
+* [x] Finaliser les tests unitaires et le test d'intégration Ollama
+* [x] Retirer l'ancienne API `src/llm.py` après audit de ses références
 
 ### Étape 3 — Extraction PDF
 

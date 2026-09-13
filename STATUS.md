@@ -58,11 +58,9 @@ Le paramètre optionnel `seed` est transmis tel quel à Ollama. Il permet de ren
 
 Les erreurs exposées au reste du projet sont `LLMConnectionError` (service injoignable), `LLMRequestError` (erreur HTTP renvoyée par Ollama), `LLMResponseError` (réponse invalide) et `LLMValidationError` (entrée ou configuration invalide). Elles héritent toutes de `LLMError`.
 
-`src/llm.py` existe encore et contient l'ancienne API `LLMClient` ainsi que la fonction de raccourci `ask()`. L'audit ne relève aucune importation de `src.llm`, `LLMClient` ou de cette fonction en dehors de ce module. Il est donc conservé provisoirement, sans être utilisé par le test actuel, jusqu'à une décision explicite de suppression.
-
 ### Tests
 
-`tests/test_ollama.py` vérifie actuellement :
+La suite de tests vérifie actuellement :
 
 * qu'une requête réelle au LLM retourne une chaîne non vide ;
 * que cette requête passe par une instance de `OllamaLLM`.
@@ -71,36 +69,35 @@ Les erreurs exposées au reste du projet sont `LLMConnectionError` (service injo
 * que les erreurs de connexion, HTTP et de réponse sont traduites en erreurs LLM explicites, sans contacter le service.
 * qu'un prompt vide, ainsi qu'une configuration ou des paramètres invalides, sont refusés avant l'appel à Ollama.
 
-Les tests unitaires vérifient aussi que l'URL et le modèle fournis au constructeur sont conservés. Il n'existe pas encore de test isolé de la requête HTTP vers Ollama.
+Les tests unitaires vérifient aussi que l'URL, le modèle et les options fournis au constructeur sont conservés, ainsi que le contenu de la requête HTTP simulée.
 
 ## Tests
 
 Dernier test exécuté :
 
 ```text
-python -m pytest
+python -m pytest -v
 
-1 passed
+16 passed
 ```
 
-Le test présent utilise réellement Ollama. La dernière exécution a réussi ; pytest a toutefois émis un avertissement de création de cache `.pytest_cache`, sans échec de test.
+Un test appelle réellement Ollama ; les autres sont unitaires et n'appellent pas le service. La dernière exécution a réussi ; pytest a toutefois émis un avertissement de création de cache `.pytest_cache`, sans échec de test.
 
 ## Étape actuelle
 
-**Étape 2 — Interface LLM**
+**Étape 3 — Extraction PDF**
 
 Sous-étape actuelle :
 
-**2.2 — Renforcement et tests de l'interface**
+**3.1 — Choix de la bibliothèque PDF**
 
 Prochaines actions :
 
-1. compléter les tests ;
-2. évaluer les autres paramètres de génération utiles ;
-3. préparer l'utilisation du LLM par les prochaines étapes du projet.
+1. choisir la bibliothèque d'extraction PDF ;
+2. définir le premier test d'extraction ;
+3. préparer un document PDF représentatif.
 
 ## Points restant à traiter
 
-* L'ancien module `src/llm.py` reste à traiter après vérification complémentaire de son absence d'utilisateurs ; il ne doit pas être supprimé sans décision explicite.
 * L'extraction PDF n'a pas encore commencé.
 * Le RAG n'a pas encore été implémenté.

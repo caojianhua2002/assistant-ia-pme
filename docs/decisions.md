@@ -47,7 +47,7 @@ Le reste de l'application devait utiliser `LLMClient` plutôt que construire dir
 
 ### État actuel
 
-Cette première encapsulation a été remplacée pour le nouveau code par l'interface `LLMInterface` et son implémentation `OllamaLLM`. Le fichier `src/llm.py` est toujours présent, mais aucune référence à `LLMClient`, `src.llm` ou à sa fonction `ask()` n'a été trouvée en dehors de ce fichier. Il est conservé provisoirement ; sa suppression reste une décision à prendre après vérification complémentaire.
+Cette première encapsulation a été remplacée par l'interface `LLMInterface` et son implémentation `OllamaLLM`. Après vérification de l'absence de référence à `LLMClient`, `src.llm` et à sa fonction `ask()` hors de ce module, `src/llm.py` a été supprimé.
 
 ---
 
@@ -65,7 +65,7 @@ La fonction `ask(prompt)` a été conservée dans `src/llm.py` comme raccourci v
 
 ### État actuel
 
-La fonction existe encore dans le module historique, mais aucun autre fichier du dépôt ne la référence. Le test actuel utilise `OllamaLLM().ask(...)`. La pertinence de conserver ce raccourci devra être réévaluée en même temps que le sort de `src/llm.py`.
+La fonction a été supprimée avec le module historique `src/llm.py`, après audit de l'absence de ses utilisateurs. Le test actuel utilise `OllamaLLM().ask(...)`.
 
 ---
 
@@ -96,6 +96,8 @@ La signature de `ask(prompt: str) -> str` reste inchangée. La configuration du 
 Le fournisseur accepte aussi `max_tokens`, transmis à Ollama comme `num_predict`, afin de limiter la longueur maximale de la réponse.
 
 Le fournisseur accepte enfin `seed`, un entier optionnel transmis à Ollama pour favoriser la reproductibilité des essais de démonstration.
+
+Les paramètres `top_p`, `top_k`, `stop`, `num_ctx` et `repeat_penalty` sont différés : aucun besoin concret du démonstrateur ne justifie encore de les exposer.
 
 ---
 

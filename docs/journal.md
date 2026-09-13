@@ -57,7 +57,7 @@ OK
 
 Cette première version a ensuite été remplacée pour le nouveau code par `LLMInterface` et `OllamaLLM`, situés dans `src/assistant_ia/llm/`. Le test d'intégration actuel instancie `OllamaLLM` puis appelle sa méthode `ask()`.
 
-L'ancien module `src/llm.py`, incluant `LLMClient` et la fonction de raccourci `ask()`, est toujours présent mais n'est référencé ni par le test actuel ni par le nouveau package. Il est conservé temporairement dans l'attente d'une décision explicite de suppression.
+Après audit de l'absence de référence à l'ancien module `src/llm.py`, à `LLMClient` et à la fonction de raccourci `ask()`, ce module a été supprimé. L'historique de cette première API reste conservé dans ce journal et dans les décisions d'architecture.
 
 Le contrat a été stabilisé : `LLMInterface` définit `ask(prompt: str) -> str`, et `OllamaLLM` l'implémente. Des tests unitaires vérifient ce contrat, l'implémentation et la conservation de la configuration sans contacter Ollama.
 
@@ -78,6 +78,10 @@ Les erreurs de connexion, les réponses HTTP en erreur et les réponses invalide
 ### Étape 2 — Validation des entrées
 
 La configuration et le prompt sont vérifiés avant tout appel réseau. Une donnée invalide lève `LLMValidationError`, et les tests unitaires confirment que ces cas n'essaient pas de contacter Ollama.
+
+### Fin de l'étape 2 — Interface LLM
+
+L'interface `LLMInterface`, le fournisseur `OllamaLLM`, les paramètres utiles au démonstrateur, la gestion des erreurs et les tests sont en place. Les paramètres supplémentaires sont volontairement différés jusqu'à l'apparition d'un besoin concret.
 
 ### Documentation
 

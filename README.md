@@ -110,8 +110,6 @@ llm = OllamaLLM(seed=42)
 
 Avec le même prompt et les mêmes autres paramètres, une graine fixe aide à reproduire le même résultat.
 
-L'ancien module `src/llm.py` est encore présent de manière transitoire, avec `LLMClient` et sa fonction `ask()`. Il n'est plus référencé par les tests ni par le nouveau package ; il est conservé jusqu'à vérification et décision explicite de suppression.
-
 ## Structure
 
 ```text
@@ -121,7 +119,6 @@ assistant-ia/
 │   └── journal.md
 ├── src/
 │   ├── config.py
-│   ├── llm.py                  # ancienne API, conservée temporairement
 │   └── assistant_ia/
 │       └── llm/
 │           ├── __init__.py
