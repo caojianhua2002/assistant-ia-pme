@@ -14,9 +14,11 @@ class OllamaLLM(LLMInterface):
         self,
         url: str = OLLAMA_URL,
         model: str = OLLAMA_MODEL,
+        temperature: float | None = None,
     ):
         self.url = url
         self.model = model
+        self.temperature = temperature
 
     def ask(self, prompt: str) -> str:
         """Envoie ``prompt`` à Ollama et retourne sa réponse textuelle."""
@@ -26,6 +28,9 @@ class OllamaLLM(LLMInterface):
             "prompt": prompt,
             "stream": False,
         }
+
+        if self.temperature is not None:
+            data["options"] = {"temperature": self.temperature}
 
         request = urllib.request.Request(
             self.url,

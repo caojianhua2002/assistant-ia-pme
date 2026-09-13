@@ -78,3 +78,15 @@ Le contrat LLM est désormais défini par `LLMInterface` dans `src/assistant_ia/
 ### Conséquence
 
 Les futurs consommateurs du LLM doivent programmer contre `LLMInterface`. `OllamaLLM` est le fournisseur concret actuel.
+
+---
+
+## 2026-09-13 — Premier paramètre de génération
+
+### Décision
+
+`OllamaLLM` accepte un paramètre optionnel `temperature`. Il est transmis dans les options de la requête Ollama uniquement lorsqu'il est renseigné.
+
+### Conséquence
+
+La signature de `ask(prompt: str) -> str` reste inchangée. La configuration du comportement de génération relève du fournisseur concret, et l'absence de `temperature` conserve le comportement par défaut d'Ollama.

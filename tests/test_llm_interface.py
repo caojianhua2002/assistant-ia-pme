@@ -14,3 +14,4 @@ def test_ollama_llm_implements_llm_interface():
     assert isinstance(llm, LLMInterface)
     assert llm.url == "http://example.test/api/generate"
     assert llm.model == "test-model"
+    assert llm.temperature is None

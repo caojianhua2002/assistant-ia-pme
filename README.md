@@ -86,6 +86,14 @@ response = llm.ask("Réponds uniquement par : OK")
 print(response)
 ```
 
+Pour définir le premier paramètre de génération disponible, on le passe au fournisseur concret :
+
+```python
+llm = OllamaLLM(temperature=0.2)
+```
+
+Si `temperature` n'est pas renseignée, Ollama conserve son comportement par défaut.
+
 L'ancien module `src/llm.py` est encore présent de manière transitoire, avec `LLMClient` et sa fonction `ask()`. Il n'est plus référencé par les tests ni par le nouveau package ; il est conservé jusqu'à vérification et décision explicite de suppression.
 
 ## Structure

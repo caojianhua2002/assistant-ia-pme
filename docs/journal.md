@@ -61,6 +61,12 @@ L'ancien module `src/llm.py`, incluant `LLMClient` et la fonction de raccourci `
 
 Le contrat a été stabilisé : `LLMInterface` définit `ask(prompt: str) -> str`, et `OllamaLLM` l'implémente. Des tests unitaires vérifient ce contrat, l'implémentation et la conservation de la configuration sans contacter Ollama.
 
+### Étape 2 — Premier paramètre de génération
+
+Un premier paramètre de génération, `temperature`, a été ajouté au constructeur de `OllamaLLM`. Lorsqu'il est défini, il est transmis à Ollama dans les options de la requête ; lorsqu'il est absent, le comportement par défaut d'Ollama est préservé.
+
+Un test unitaire vérifie le contenu de la requête HTTP avec un service Ollama simulé.
+
 ### Documentation
 
 Les fichiers suivants ont été mis à jour pour refléter l'état réel du projet :
@@ -76,7 +82,7 @@ Les fichiers suivants ont été mis à jour pour refléter l'état réel du proj
 Continuer l'étape 2 :
 
 * renforcer les tests ;
-* définir les paramètres utiles du LLM ;
+* évaluer les autres paramètres utiles du LLM ;
 * améliorer la gestion des erreurs ;
 
 avant de commencer l'extraction des documents PDF.
