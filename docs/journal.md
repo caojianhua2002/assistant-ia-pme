@@ -67,6 +67,8 @@ Un premier paramètre de génération, `temperature`, a été ajouté au constru
 
 Un test unitaire vérifie le contenu de la requête HTTP avec un service Ollama simulé.
 
+Une limite facultative de longueur, `max_tokens`, a ensuite été ajoutée. Elle est transmise sous le nom `num_predict` attendu par l'API Ollama.
+
 ### Documentation
 
 Les fichiers suivants ont été mis à jour pour refléter l'état réel du projet :

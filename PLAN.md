@@ -38,6 +38,7 @@ Le projet privilégie :
 * [x] Migration du test existant vers `OllamaLLM`
 * [x] Stabiliser le contrat `LLMInterface.ask(prompt) -> str`
 * [x] Ajouter le paramètre de génération `temperature`
+* [x] Ajouter une limite de réponse avec `max_tokens`
 * [ ] Évaluer les autres paramètres utiles de génération
 * [ ] Améliorer la gestion des erreurs
 * [ ] Finaliser les tests (dont tests unitaires sans dépendre d'Ollama)

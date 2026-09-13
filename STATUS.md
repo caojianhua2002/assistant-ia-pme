@@ -52,6 +52,8 @@ Le contrat stabilisé est `ask(prompt: str) -> str` : chaque fournisseur reçoit
 
 `OllamaLLM` accepte aussi un paramètre optionnel `temperature`. Lorsqu'il est renseigné, il est transmis à Ollama dans les options de génération. Lorsqu'il vaut `None` (valeur par défaut), aucune option n'est envoyée et le comportement par défaut d'Ollama est conservé.
 
+`OllamaLLM` accepte également `max_tokens`, qui limite le nombre maximal de tokens générés. Cette option est transmise à l'API Ollama sous son nom `num_predict`. Comme `temperature`, elle reste absente de la requête lorsqu'elle vaut `None`.
+
 `src/llm.py` existe encore et contient l'ancienne API `LLMClient` ainsi que la fonction de raccourci `ask()`. L'audit ne relève aucune importation de `src.llm`, `LLMClient` ou de cette fonction en dehors de ce module. Il est donc conservé provisoirement, sans être utilisé par le test actuel, jusqu'à une décision explicite de suppression.
 
 ### Tests
@@ -61,7 +63,7 @@ Le contrat stabilisé est `ask(prompt: str) -> str` : chaque fournisseur reçoit
 * qu'une requête réelle au LLM retourne une chaîne non vide ;
 * que cette requête passe par une instance de `OllamaLLM`.
 * que `LLMInterface` impose la méthode `ask()` et que `OllamaLLM` respecte ce contrat sans nécessiter de service Ollama.
-* que la valeur de `temperature` configurée est bien envoyée dans la requête HTTP vers Ollama, sans contacter le service.
+* que les options `temperature` et `max_tokens` configurées sont bien envoyées dans la requête HTTP vers Ollama, sans contacter le service.
 
 Les tests unitaires vérifient aussi que l'URL et le modèle fournis au constructeur sont conservés. Il n'existe pas encore de test isolé de la requête HTTP vers Ollama.
 

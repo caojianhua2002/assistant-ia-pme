@@ -94,6 +94,14 @@ llm = OllamaLLM(temperature=0.2)
 
 Si `temperature` n'est pas renseignée, Ollama conserve son comportement par défaut.
 
+On peut aussi limiter la longueur de la réponse :
+
+```python
+llm = OllamaLLM(max_tokens=64)
+```
+
+Cette option est transmise à Ollama sous le nom `num_predict`.
+
 L'ancien module `src/llm.py` est encore présent de manière transitoire, avec `LLMClient` et sa fonction `ask()`. Il n'est plus référencé par les tests ni par le nouveau package ; il est conservé jusqu'à vérification et décision explicite de suppression.
 
 ## Structure

@@ -90,3 +90,7 @@ Les futurs consommateurs du LLM doivent programmer contre `LLMInterface`. `Ollam
 ### Conséquence
 
 La signature de `ask(prompt: str) -> str` reste inchangée. La configuration du comportement de génération relève du fournisseur concret, et l'absence de `temperature` conserve le comportement par défaut d'Ollama.
+
+### Complément
+
+Le fournisseur accepte aussi `max_tokens`, transmis à Ollama comme `num_predict`, afin de limiter la longueur maximale de la réponse.

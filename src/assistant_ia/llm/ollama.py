@@ -15,10 +15,12 @@ class OllamaLLM(LLMInterface):
         url: str = OLLAMA_URL,
         model: str = OLLAMA_MODEL,
         temperature: float | None = None,
+        max_tokens: int | None = None,
     ):
         self.url = url
         self.model = model
         self.temperature = temperature
+        self.max_tokens = max_tokens
 
     def ask(self, prompt: str) -> str:
         """Envoie ``prompt`` à Ollama et retourne sa réponse textuelle."""
@@ -29,8 +31,13 @@ class OllamaLLM(LLMInterface):
             "stream": False,
         }
 
+        options = {}
         if self.temperature is not None:
-            data["options"] = {"temperature": self.temperature}
+            options["temperature"] = self.temperature
+        if self.max_tokens is not None:
+            options["num_predict"] = self.max_tokens
+        if options:
+            data["options"] = options
 
         request = urllib.request.Request(
             self.url,

@@ -15,3 +15,4 @@ def test_ollama_llm_implements_llm_interface():
     assert llm.url == "http://example.test/api/generate"
     assert llm.model == "test-model"
     assert llm.temperature is None
+    assert llm.max_tokens is None
