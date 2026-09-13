@@ -48,12 +48,12 @@ Le projet privilégie :
 
 ### Étape 3 — Extraction PDF
 
-**Statut : ⏳ à venir**
+**Statut : ✅ terminée**
 
-* [ ] Choix de la bibliothèque PDF
-* [ ] Extraction du texte
-* [ ] Gestion des documents contenant plusieurs pages
-* [ ] Tests sur des documents réels
+* [x] Choix de la bibliothèque PDF (`pypdf`)
+* [x] Extraction du texte
+* [x] Gestion des documents contenant plusieurs pages
+* [x] Tests sur un PDF réel multi-pages généré pour les tests
 
 ### Étape 4 — Recherche classique
 

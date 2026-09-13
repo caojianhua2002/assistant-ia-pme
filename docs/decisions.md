@@ -122,3 +122,25 @@ Le reste de l'application peut gérer les échecs sans dépendre directement des
 ### Conséquence
 
 Un prompt vide, une URL ou un modèle vide, une température non numérique et une valeur de `max_tokens` non positive sont détectés localement, sans appel HTTP.
+
+---
+
+## 2026-09-13 — Extraction PDF locale avec `pypdf`
+
+### Décision
+
+L'extraction initiale des PDF utilise `pypdf`, exécuté localement. Le contrat
+`PDFExtractor.extract(path)` retourne une liste de `PDFPage`, un résultat par
+page avec le chemin du document, le numéro de page et le texte extrait.
+
+### Raisons
+
+* aucune transmission de document hors du poste ;
+* bibliothèque Python légère adaptée au texte des PDF numériques ;
+* conservation immédiate des numéros de page nécessaires aux futures sources.
+
+### Conséquence
+
+Les PDF issus d'un scan sans couche texte produiront des pages vides. La
+reconnaissance optique de caractères (OCR) est volontairement différée jusqu'à
+l'arrivée d'un besoin réel.

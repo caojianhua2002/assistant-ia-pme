@@ -95,9 +95,21 @@ Les fichiers suivants ont été mis à jour pour refléter l'état réel du proj
 
 ### Prochaine étape
 
-Continuer l'étape 2 :
+Commencer l'étape 3 : extraction des documents PDF.
 
-* renforcer les tests ;
-* évaluer les autres paramètres utiles du LLM ;
+### Étape 3 — Extraction PDF
 
-avant de commencer l'extraction des documents PDF.
+La bibliothèque locale `pypdf` a été retenue et déclarée dans
+`requirements.txt`. Le nouveau composant `PDFExtractor` lit un PDF et retourne
+une entrée `PDFPage` par page : chemin du document, numéro de page humain (à
+partir de 1) et texte extrait.
+
+Un test crée un véritable PDF de deux pages, contenant le délai de paiement du
+client Martin, puis vérifie l'extraction du texte et des futures métadonnées de
+source. Des tests couvrent également un document absent et une extension non
+PDF. Les PDF numérisés sans couche texte ne sont pas encore traités par OCR.
+
+### Prochaine étape
+
+Commencer l'étape 4 : découper et indexer les pages, puis mettre en place une
+recherche par mots-clés.

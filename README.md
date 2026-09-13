@@ -37,6 +37,21 @@ Question utilisateur
 
 Cette séparation permet de faire évoluer le moteur LLM sans modifier le contrat utilisé par le reste de l'application.
 
+## Extraction PDF
+
+Les PDF sont lus localement avec `pypdf`. `PDFExtractor` retourne une liste de
+`PDFPage` : chaque élément contient le chemin du document, son numéro de page
+(à partir de 1) et le texte extrait. Cette structure conservera les sources
+nécessaires aux futures réponses documentées.
+
+```python
+from src.assistant_ia.documents import PDFExtractor
+
+pages = PDFExtractor().extract("documents/contrat-martin.pdf")
+for page in pages:
+    print(page.page_number, page.text)
+```
+
 ## Environnement de développement
 
 Le projet utilise actuellement :
@@ -120,6 +135,8 @@ assistant-ia/
 ├── src/
 │   ├── config.py
 │   └── assistant_ia/
+│       ├── documents/
+│       │   └── pdf.py
 │       └── llm/
 │           ├── __init__.py
 │           ├── interface.py
@@ -128,6 +145,7 @@ assistant-ia/
 │   ├── __init__.py
 │   └── test_ollama.py
 ├── .venv/
+├── requirements.txt
 ├── PLAN.md
 ├── README.md
 └── STATUS.md

@@ -83,19 +83,29 @@ python -m pytest -v
 
 Un test appelle réellement Ollama ; les autres sont unitaires et n'appellent pas le service. La dernière exécution a réussi ; pytest a toutefois émis un avertissement de création de cache `.pytest_cache`, sans échec de test.
 
+## Extraction PDF
+
+L'étape 3 est terminée. La bibliothèque locale `pypdf` (version `6.18.1`) est
+déclarée dans `requirements.txt`. `PDFExtractor` extrait le texte de chaque
+page d'un fichier PDF et retourne des `PDFPage` contenant le chemin du
+document, le numéro de page (à partir de 1) et le texte. Une page sans texte
+est conservée afin de ne pas perdre les références de source.
+
+Les erreurs de chemin absent, d'extension non-PDF et de lecture de PDF sont
+exposées comme `PDFExtractionError`. Les tests génèrent un vrai PDF à deux
+pages avec du texte extractible et vérifient le texte ainsi que les métadonnées
+de source.
+
 ## Étape actuelle
 
-**Étape 3 — Extraction PDF**
-
-Sous-étape actuelle :
-
-**3.1 — Choix de la bibliothèque PDF**
+**Étape 4 — Recherche classique**
 
 Prochaines actions :
 
-1. choisir la bibliothèque d'extraction PDF ;
-2. définir le premier test d'extraction ;
-3. préparer un document PDF représentatif.
+1. définir le découpage des pages en passages ;
+2. indexer les passages ;
+3. rechercher par mots-clés ;
+4. vérifier la pertinence avec le scénario Martin.
 
 ## Points restant à traiter
 
