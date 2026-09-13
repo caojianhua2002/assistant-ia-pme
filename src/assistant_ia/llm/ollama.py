@@ -4,7 +4,12 @@ import urllib.request
 
 from src.config import OLLAMA_MODEL, OLLAMA_URL
 
-from .errors import LLMConnectionError, LLMRequestError, LLMResponseError
+from .errors import (
+    LLMConnectionError,
+    LLMRequestError,
+    LLMResponseError,
+    LLMValidationError,
+)
 from .interface import LLMInterface
 
 
@@ -18,6 +23,7 @@ class OllamaLLM(LLMInterface):
         temperature: float | None = None,
         max_tokens: int | None = None,
     ):
+        self._validate_configuration(url, model, temperature, max_tokens)
         self.url = url
         self.model = model
         self.temperature = temperature
@@ -25,6 +31,11 @@ class OllamaLLM(LLMInterface):
 
     def ask(self, prompt: str) -> str:
         """Envoie ``prompt`` à Ollama et retourne sa réponse textuelle."""
+
+        if not isinstance(prompt, str) or not prompt.strip():
+            raise LLMValidationError(
+                "Le prompt doit être une chaîne de caractères non vide."
+            )
 
         data = {
             "model": self.model,
@@ -75,3 +86,30 @@ class OllamaLLM(LLMInterface):
             )
 
         return text
+
+    @staticmethod
+    def _validate_configuration(
+        url: str,
+        model: str,
+        temperature: float | None,
+        max_tokens: int | None,
+    ) -> None:
+        if not isinstance(url, str) or not url.strip():
+            raise LLMValidationError("L'URL Ollama doit être non vide.")
+        if not isinstance(model, str) or not model.strip():
+            raise LLMValidationError("Le modèle Ollama doit être non vide.")
+        if temperature is not None and (
+            isinstance(temperature, bool)
+            or not isinstance(temperature, (int, float))
+        ):
+            raise LLMValidationError(
+                "La température doit être un nombre ou None."
+            )
+        if max_tokens is not None and (
+            isinstance(max_tokens, bool)
+            or not isinstance(max_tokens, int)
+            or max_tokens <= 0
+        ):
+            raise LLMValidationError(
+                "max_tokens doit être un entier strictement positif ou None."
+            )

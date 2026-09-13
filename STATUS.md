@@ -54,7 +54,7 @@ Le contrat stabilisé est `ask(prompt: str) -> str` : chaque fournisseur reçoit
 
 `OllamaLLM` accepte également `max_tokens`, qui limite le nombre maximal de tokens générés. Cette option est transmise à l'API Ollama sous son nom `num_predict`. Comme `temperature`, elle reste absente de la requête lorsqu'elle vaut `None`.
 
-Les erreurs exposées au reste du projet sont `LLMConnectionError` (service injoignable), `LLMRequestError` (erreur HTTP renvoyée par Ollama) et `LLMResponseError` (réponse invalide). Elles héritent toutes de `LLMError`.
+Les erreurs exposées au reste du projet sont `LLMConnectionError` (service injoignable), `LLMRequestError` (erreur HTTP renvoyée par Ollama), `LLMResponseError` (réponse invalide) et `LLMValidationError` (entrée ou configuration invalide). Elles héritent toutes de `LLMError`.
 
 `src/llm.py` existe encore et contient l'ancienne API `LLMClient` ainsi que la fonction de raccourci `ask()`. L'audit ne relève aucune importation de `src.llm`, `LLMClient` ou de cette fonction en dehors de ce module. Il est donc conservé provisoirement, sans être utilisé par le test actuel, jusqu'à une décision explicite de suppression.
 
@@ -67,6 +67,7 @@ Les erreurs exposées au reste du projet sont `LLMConnectionError` (service injo
 * que `LLMInterface` impose la méthode `ask()` et que `OllamaLLM` respecte ce contrat sans nécessiter de service Ollama.
 * que les options `temperature` et `max_tokens` configurées sont bien envoyées dans la requête HTTP vers Ollama, sans contacter le service.
 * que les erreurs de connexion, HTTP et de réponse sont traduites en erreurs LLM explicites, sans contacter le service.
+* qu'un prompt vide, ainsi qu'une configuration ou des paramètres invalides, sont refusés avant l'appel à Ollama.
 
 Les tests unitaires vérifient aussi que l'URL et le modèle fournis au constructeur sont conservés. Il n'existe pas encore de test isolé de la requête HTTP vers Ollama.
 
@@ -94,8 +95,7 @@ Prochaines actions :
 
 1. compléter les tests ;
 2. évaluer les autres paramètres de génération utiles ;
-3. valider les entrées et paramètres du fournisseur ;
-4. préparer l'utilisation du LLM par les prochaines étapes du projet.
+3. préparer l'utilisation du LLM par les prochaines étapes du projet.
 
 ## Points restant à traiter
 

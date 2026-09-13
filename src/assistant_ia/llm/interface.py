@@ -14,7 +14,7 @@ class LLMInterface(ABC):
         """Retourne la réponse textuelle du fournisseur pour ``prompt``.
 
         Args:
-            prompt: La question ou l'instruction à envoyer au modèle.
+            prompt: La question ou l'instruction non vide à envoyer au modèle.
 
         Returns:
             La réponse produite par le modèle.

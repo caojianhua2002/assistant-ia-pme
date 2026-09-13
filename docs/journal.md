@@ -73,6 +73,10 @@ Une limite facultative de longueur, `max_tokens`, a ensuite été ajoutée. Elle
 
 Les erreurs de connexion, les réponses HTTP en erreur et les réponses invalides sont désormais traduites en exceptions du projet. Les tests unitaires simulent ces trois situations sans appeler Ollama.
 
+### Étape 2 — Validation des entrées
+
+La configuration et le prompt sont vérifiés avant tout appel réseau. Une donnée invalide lève `LLMValidationError`, et les tests unitaires confirment que ces cas n'essaient pas de contacter Ollama.
+
 ### Documentation
 
 Les fichiers suivants ont été mis à jour pour refléter l'état réel du projet :
@@ -89,6 +93,5 @@ Continuer l'étape 2 :
 
 * renforcer les tests ;
 * évaluer les autres paramètres utiles du LLM ;
-* valider les entrées et paramètres du fournisseur ;
 
 avant de commencer l'extraction des documents PDF.

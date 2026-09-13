@@ -106,3 +106,15 @@ Les erreurs provenant d'Ollama sont traduites en exceptions du projet : `LLMConn
 ### Conséquence
 
 Le reste de l'application peut gérer les échecs sans dépendre directement des exceptions HTTP de Python ou du format de réponse d'Ollama.
+
+---
+
+## 2026-09-13 — Validation avant appel à Ollama
+
+### Décision
+
+`OllamaLLM` valide sa configuration à la construction et valide le prompt avant d'envoyer une requête. Les données invalides lèvent `LLMValidationError`.
+
+### Conséquence
+
+Un prompt vide, une URL ou un modèle vide, une température non numérique et une valeur de `max_tokens` non positive sont détectés localement, sans appel HTTP.

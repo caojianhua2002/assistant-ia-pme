@@ -12,3 +12,7 @@ class LLMRequestError(LLMError):
 
 class LLMResponseError(LLMError):
     """Le fournisseur a renvoyé une réponse inexploitable."""
+
+
+class LLMValidationError(LLMError):
+    """Les données fournies au fournisseur de LLM sont invalides."""

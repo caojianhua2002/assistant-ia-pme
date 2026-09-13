@@ -41,7 +41,7 @@ Le projet privilégie :
 * [x] Ajouter une limite de réponse avec `max_tokens`
 * [ ] Évaluer les autres paramètres utiles de génération
 * [x] Distinguer les erreurs de connexion, de requête et de réponse LLM
-* [ ] Valider les entrées et paramètres du fournisseur
+* [x] Valider les entrées et paramètres du fournisseur
 * [ ] Finaliser les tests (dont tests unitaires sans dépendre d'Ollama)
 
 ### Étape 3 — Extraction PDF

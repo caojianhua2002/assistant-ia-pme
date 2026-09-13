@@ -3,6 +3,7 @@ from .errors import (
     LLMError,
     LLMRequestError,
     LLMResponseError,
+    LLMValidationError,
 )
 from .interface import LLMInterface
 from .ollama import OllamaLLM
@@ -13,5 +14,6 @@ __all__ = [
     "LLMInterface",
     "LLMRequestError",
     "LLMResponseError",
+    "LLMValidationError",
     "OllamaLLM",
 ]

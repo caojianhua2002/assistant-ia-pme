@@ -8,6 +8,7 @@ from src.assistant_ia.llm import (
     LLMConnectionError,
     LLMRequestError,
     LLMResponseError,
+    LLMValidationError,
     OllamaLLM,
 )
 
@@ -62,3 +63,23 @@ def test_ask_raises_response_error_when_response_is_not_json():
     ):
         with pytest.raises(LLMResponseError, match="n'est pas un JSON valide"):
             OllamaLLM().ask("Bonjour")
+
+
+@pytest.mark.parametrize(
+    ("kwargs", "message"),
+    [
+        ({"url": ""}, "URL Ollama"),
+        ({"model": " "}, "modèle Ollama"),
+        ({"temperature": "0.2"}, "température"),
+        ({"max_tokens": 0}, "max_tokens"),
+    ],
+)
+def test_constructor_rejects_invalid_configuration(kwargs, message):
+    with pytest.raises(LLMValidationError, match=message):
+        OllamaLLM(**kwargs)
+
+
+@pytest.mark.parametrize("prompt", ["", "   ", 42])
+def test_ask_rejects_invalid_prompt(prompt):
+    with pytest.raises(LLMValidationError, match="prompt"):
+        OllamaLLM().ask(prompt)
