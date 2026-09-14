@@ -20,3 +20,6 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# Exercices exclus de git
+/exercices_exclus_de_git/

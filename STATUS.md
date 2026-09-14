@@ -109,5 +109,6 @@ Prochaines actions :
 
 ## Points restant à traiter
 
-* L'extraction PDF n'a pas encore commencé.
+* La recherche classique n'est pas encore implémentée.
+* Les embeddings n'ont pas encore été implémentés.
 * Le RAG n'a pas encore été implémenté.
